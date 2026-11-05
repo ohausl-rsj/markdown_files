@@ -128,9 +128,271 @@ Reporting byl při mém nástupu formálně i odpovědně zařazen pod Finančn�
 
 ## Projekty
 
+Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, development a reporting. U každého je uvedena fáze od myšlenky až po produkci:
 
+**Nápad → Analýza → PoC → Realizace → Pilot → Dokončení → Provoz**
+
+### Přehled projektů
+
+| Projekt | Oblast | Fáze | Partner | Zahájení | Plánované dokončení |
+|---|---|---|---|---|---|
+| [MS Sentinel](#ms-sentinel) | Core IT | Dokončení | Orbit | 5/2026 | 11/2026 |
+| [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) | Core IT | Provoz | RSJ Custody (IS útvar) | 03/2026 | 09/2026 |
+| [RBAC](#rbac) | Core IT | Realizace | interně | 04/2026 | dlouhodobý |
+| [IT service management v Alvao](#it-service-management-v-alvao) | Core IT | Provoz | interně | 9/2025 | 02/2026 |
+| [AI reporting pro PE/VC tým](#ai-reporting-pro-pevc-tým) | AI automatizace | Pilot | interně | 06/2026 | ... |
+| [AI posouzení LPA](#ai-posouzení-lpa) | AI automatizace | PoC | Jakub Filip | 09/2026 | ... |
+| [AI vytěžování faktur](#ai-vytěžování-faktur) | AI automatizace | Analýza | Jakub Filip | 10/2026 | ... |
+| [MDM](#mdm) | Development | Provoz, další rozvoj | D. Marko (RSJ Custody) | před 9/2025 | Průběžně |
+| [Založení fondu](#založení-fondu) | Development | Pilot | RSJ Custody (IS útvar) | 03/2026 | 12/2026 |
+| [DMS](#dms) | Development | Dokončení | SharePoint Solutions s. r. o. | 04/2026 | ... |
+| [Auditní workflow](#auditní-workflow) | Development | PoC | RSJ Custody (IS útvar) | 11/2026 | ... |
+| [Projects](#projects) | Development | Analýza | SharePoint Solutions s. r. o. | 09/2026 | 04/2027 |
+| [Invoices](#invoices) | Development | Nápad | SharePoint Solutions s. r. o. | 2027 | 2027 |
+
+### Core IT
+
+#### MS Sentinel
+
+- **Cíl:** vyladit stávající SIEM tak, aby pokrýval všechny klíčové systémy, spolehlivě odhaloval bezpečnostní hrozby a podezřelé aktivity a na vybrané situace automaticky reagoval.
+- **Partner:** Orbit s. r. o.
+- **Zahájení:** květen 2026
+- **Fáze:** Dokončení
+- **Přínos:** plný přehled o bezpečnosti celého prostředí, rychlejší odhalení hrozeb s menším počtem planých poplachů a automatická reakce na běžné situace. Zároveň máme podklady pro DORA a naplno využíváme nástroj, za který už platíme.
+
+**Průběh:**
+
+- [x] Napojení všech aplikací a systémů
+- [x] Ladění detekčních pravidel
+- [x] Playbooky (automatizovaná reakce na incidenty)
+- [ ] Workbooky (přehledy a vizualizace) – *probíhá*
+- [ ] Dokumentace
+- [ ] Předání a ukončení projektu
+
+**Další krok:** po ukončení projektu převezme Sentinel do vlastnictví nová role security & cloud administrátora (viz [Strategie](#strategie)) a bude ho dále rozvíjet.
+
+#### Propojení HR modulu BOSS s AD
+
+- **Cíl:** vytvořit jeden zdroj pravdy o zaměstnancích. Data vznikají na HR v modulu BOSS a automaticky se přenášejí do identit v AD a Entra ID.
+- **Partner:** RSJ Custody (IS útvar)
+- **Zahájení:** 03/2026
+- **Fáze:** Provoz
+- **Přínos:** údaje o zaměstnancích a jejich úvazcích na jednotlivých společnostech jsou ve všech systémech stejné a aktuální, bez ručního přepisování. Celý proces je auditovatelný a je základem pro zavedení řízení rolí a oprávnění (RBAC).
+
+**Průběh:**
+
+- [x] Export dat o zaměstnancích z HR modulu BOSS (RSJ Custody)
+- [x] Skript a procedura pro přenos dat do AD (IT útvar)
+- [x] Synchronizace z AD do Entra ID
+- [x] Odesílání logů do MS Sentinel a workbook pro dohled nad synchronizací
+
+**Návaznost:** projekt je předpokladem pro zavedení modelu řízení rolí a oprávnění (RBAC). Logy procedur jsou napojené do [MS Sentinel](#ms-sentinel), celé řešení je tak provázané od zdroje dat až po bezpečnostní dohled.
+
+#### IT service management v Alvao
+
+- **Cíl:** rozšířit Alvao z jednoduchého helpdesku na plnohodnotný IT service management s řízenými procesy a evidencí IT aktiv podle požadavků DORA.
+- **Partner:** interně
+- **Zahájení:** září 2025
+- **Fáze:** Provoz, průběžné ladění procesů a doplňování CMDB
+- **Přínos:** všechny požadavky, změny a incidenty procházejí jednotným řízeným procesem a jsou dohledatelné. V CMDB máme přehled o IT aktivech a jejich vazbách, takže u každé změny nebo incidentu víme, čeho se týká. Splňujeme tím požadavky DORA na řízení incidentů, změn a evidenci IKT aktiv a máme z Alvao data pro reporting a vyhodnocování vytížení týmu.
+
+**Zavedené procesy:**
+
+- [x] Request fulfillment (vyřizování požadavků)
+- [x] Identity management (správa uživatelů a přístupů)
+- [x] Change management (řízení změn)
+- [x] Incident management (řízení incidentů)
+- [x] Problem management (řešení příčin opakovaných problémů)
+- [x] Threat management (řízení hrozeb)
+- [x] CMDB – databáze konfiguračních položek (průběžně doplňována)
+
+#### RBAC
+
+- **Cíl:** zavést řízení oprávnění podle rolí místo nastavování přístupů jednotlivým uživatelům, napříč všemi systémy.
+- **Partner:** interně
+- **Zahájení:** 04/2026
+- **Fáze:** Realizace (dlouhodobý projekt)
+- **Přínos:** každý zaměstnanec má přesně ta oprávnění, která potřebuje pro svou roli. Nástup, změna pozice i odchod se řeší přiřazením role, ne ručním nastavováním v každém systému. Oprávnění jsou přehledná a auditovatelná, což je jeden z požadavků DORA na řízení přístupů.
+
+**Průběh:**
+
+- [ ] Zmapování všech systémů a jejich oprávnění – *probíhá*
+- [ ] Definice rolí - *probíhá*
+- [ ] Nastavení oprávnění podle rolí v jednotlivých systémech
+- [ ] Pravidelná revize rolí a oprávnění
+
+**Návaznost:** zdrojem informací o zaměstnancích, jejich pozicích a úvazcích je [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad).
+
+### AI automatizace
+
+#### AI reporting pro PE/VC tým
+
+- **Cíl:** nahradit manuální zpracování dat pro PE/VC tým opakovatelným a auditovatelným procesem.
+- **Partner:** interně
+- **Zahájení:** 06/2026
+- **Fáze:** Pilot
+- **Přínos:** úspora času PE/VC týmu na ručním zpracování dat, menší riziko chyb díky automatické validaci a dohledatelnost každého kroku. Data jsou uložená strukturovaně a připravená pro reporting a vizualizace.
+
+**Jak řešení funguje:**
+
+1. zpracuje vstupní data,
+2. pomocí AI z nich vytěží a strukturuje potřebné informace,
+3. provede validaci,
+4. uloží je do databáze pro další reporting a vizualizaci.
+
+**Průběh:**
+
+- [x] Vývoj řešení
+- [ ] Pilotní provoz s PE/VC týmem – *probíhá*
+- [ ] Napojení na MDM – *probíhá*
+- [ ] Napojení výstupů na Power BI
+
+**Návaznost:** řešení se napojuje na [MDM](#mdm) jako zdroj kmenových dat a výstupy budou postupně napojené na Power BI, tedy do oblasti [Data a reporting](#data--reporting).
+
+#### AI posouzení LPA
+
+- **Cíl:** pomocí AI posuzovat smlouvy LPA (Limited Partnership Agreement) podle definovaných pravidel a upozorňovat na odchylky.
+- **Partner:** Jakub Filip
+- **Zahájení:** 09/2026
+- **Fáze:** PoC
+- **Přínos:** rychlejší a konzistentní kontrola smluv podle jednotných pravidel, úspora času týmu při revizi a menší riziko přehlédnutí důležitých ustanovení.
+
+**Průběh:**
+
+- [x] Definice pravidel pro posouzení
+- [ ] Proof of Concept – *probíhá*
+- [ ] Vyhodnocení PoC a rozhodnutí o realizaci
+
+#### AI vytěžování faktur
+
+- **Cíl:** zefektivnit práci backoffice. Faktury budou programově a pomocí AI vytěžené na jednotlivé položky a do aplikace [Invoices](#aplikace) se zapíší správné údaje, které dnes ručně řeší backoffice, účetní nebo likvidátor.
+- **Partner:** Jakub Filip
+- **Zahájení:** 10/2026
+- **Fáze:** Analýza
+- **Přínos:** úspora času backoffice a účetních na ručním přepisování, méně chyb při zadávání a rychlejší zpracování faktur.
+
+**Průběh:**
+
+- [ ] Analýza – *probíhá*
+- [ ] Vytěžení faktur na jednotlivé položky a zápis do Invoices
+- [ ] Rozšíření: AI pomáhá s doplňováním zakázek a dalších informací k fakturám a položkám
+
+**Návaznost:** projekt přímo navazuje na workflow schvalování faktur v aplikaci [Invoices](#invoices).
+
+### Development
+
+#### MDM
+
+- **Cíl:** vytvořit jeden zdroj pravdy pro kmenová data (subjekty, společnosti a jejich vazby) a napojit na něj všechny klíčové systémy.
+- **Partner:** Dušan Marko (RSJ Custody)
+- **Zahájení:** před 9/2025 (projekt jsem převzal v běhu), v produkci od 7/2026
+- **Fáze:** Provoz, další rozvoj
+- **Přínos:** subjekty vznikají pouze v MDM, takže nevznikají duplicity a všechny napojené systémy pracují se stejnými daty. Ruční zakládání a opravy dat v jednotlivých systémech odpadají.
+
+**Aktuálně řešené oblasti:** (***doladění detailů doplnit***)
+
+**Průběh:**
+
+- [x] Spuštění do produkce (7/2026)
+- [x] Napojení na Helios – Fondy
+- [x] Napojení na Helios – SPV
+- [x] Zakládání subjektů výhradně v MDM
+- [ ] ***doladění detailů doplnit*** – *probíhá*
+- [ ] Napojení na ostatní klíčové systémy (dílčí projekty) – *probíhá*
+
+**Návaznost:** MDM je zdrojem kmenových dat pro [Helios – Fondy a Helios – SPV](#aplikace) a pro [Cashflow](#aplikace). Napojuje se na něj i [AI reporting pro PE/VC tým](#ai-reporting-pro-pevc-tým).
+
+#### Založení fondu
+
+- **Cíl:** převést celý proces založení fondu do jednotné workflow aplikace.
+- **Partner:** RSJ Custody (IS útvar, T. Málek)
+- **Zahájení:** 03/2026
+- **Fáze:** Pilot
+- **Přínos:** založení fondu probíhá jednotným řízeným procesem, všichni zúčastnění vidí, v jakém je stavu, a každý krok je dohledatelný. Menší riziko, že se v procesu něco opomene.
+
+**Průběh:**
+
+- [x] Vývoj workflow aplikace (RSJ Custody)
+- [ ] Pilot – *probíhá*: několik fondů založených starým procesem souběžně prochází i novou aplikací
+- [ ] Vydání instrukcí pro uživatele
+- [ ] Ostrý provoz
+
+#### DMS
+
+- **Cíl:** nahradit původní nevyhovující DMS novým systémem na PaaS a sjednotit do něj dokumentaci fondů i SPV.
+- **Partner:** SharePoint Solutions s. r. o.
+- **Zahájení:** 04/2026
+- **Fáze:** Dokončení
+- **Přínos:** moderní a udržitelný systém v souladu s cloud first strategií, veškerá dokumentace fondů i SPV na jednom místě. Zároveň jde o klíčový krok k odstavení on-premise SharePointu a lokálního AD.
+
+**Průběh:**
+
+- [x] Vývoj nového DMS
+- [x] Testování
+- [x] Akceptace (11/2026)
+- [ ] Migrační matice a mapování metadat – *probíhá*
+- [ ] Migrace dat SPV z původního DMS
+- [ ] Migrace dat fondů ze SharePointu
+- [ ] Ostrý provoz a odstavení původního DMS
+
+**Výzva:** data se migrují ze dvou zdrojů (SPV z původního DMS, fondy ze SharePointu) a mapování metadat komplikuje nepořádek ve zdrojových datech. Migrace je tak zároveň příležitostí data vyčistit a sjednotit.
+
+**Návaznost:** číselníky společností a subjektů se v DMS načítají z [MDM](#mdm). Subjekty tak vznikají na jednom místě a v MDM je může zakládat více uživatelů, čímž se snižuje závislost na IT týmu a rozkládá zátěž. Jan Kridlo tak získá prostor na jiné iniciativy.
+
+#### Auditní workflow
+
+<!-- K doplnění s Tomášem Málkem -->
+
+- **Cíl:** ...
+  <!-- Jaký proces workflow pokrývá? Co dnes backoffice dělá ručně? -->
+- **Partner:** RSJ Custody (IS útvar, T. Málek)
+- **Zahájení:** 11/2026
+- **Fáze:** PoC
+  <!-- Nápad / Analýza / PoC / Realizace / Pilot / Dokončení / Provoz -->
+- **Přínos:** ...
+  <!-- Úspora času? Dohledatelnost pro audit? Soulad s regulací? -->
+
+**Průběh:**
+
+- [ ] ...
+- [ ] ...
+  <!-- Jaké jsou hlavní kroky a co je už hotové? -->
+
+**Návaznost:** ...
+<!-- Napojení na MDM, DMS, Invoices, BOSS? Kdo jsou uživatelé? -->
+
+#### Projects
+
+- **Cíl:** přesunout workflow investičních rozhodnutí z on-premise SharePointu na novou platformu PaaS.
+- **Partner:** SharePoint Solutions s. r. o.
+- **Zahájení:** 09/2026
+- **Fáze:** Analýza
+- **Přínos:** moderní a udržitelné řešení v souladu s cloud first strategií. Po migraci DMS jde o další krok k odstavení on-premise SharePointu a lokálního AD.
+
+**Průběh:**
+
+- [ ] Analýza – *probíhá*
+- [ ] Realizace
+- [ ] Migrace dat
+- [ ] Ostrý provoz a odstavení původního řešení
+
+**Návaznost:** navazuje na [DMS](#dms). Po přesunu DMS, Projects a Invoices bude možné odstavit on-premise SharePoint a zrušit lokální AD.
+
+#### Invoices
+
+- **Cíl:** přesunout workflow schvalování faktur z on-premise SharePointu na novou platformu PaaS.
+- **Partner:** SharePoint Solutions s. r. o.
+- **Zahájení:** plánováno na 2027
+- **Fáze:** Nápad
+- **Přínos:** poslední krok migrace, po kterém bude možné odstavit on-premise SharePoint a zrušit lokální AD.
+
+**Návaznost:** navazuje na [DMS](#dms) a [Projects](#projects). Nové řešení bude rovnou připravené pro napojení [AI vytěžování faktur](#ai-vytěžování-faktur).
+
+### Reporting
 
 ## Budget
+
+<!-- Bude doplněno následně, slide by měl sloužit pro přehled jaký byl plánovaný budget a jaký je aktuální stav k Q2, jelikož více dat nemám od účetních -->
 
 ## Strategie
 
