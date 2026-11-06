@@ -16,7 +16,7 @@ Hlavním požadavkem CEO na začátku roku bylo, aby proběhl tzv. tuning aktuá
 Jedná se o investiční skupinu, která čítá několik společností. Naše IT oddělení působí napříč dvěma společnostmi ze skupiny:
 
 1. **RSJ Investments a. s.** - hlavní společnost, jelikož se jedná o regulovaný subjekt, který spadá pod ČNB (DORA)
-2. **RSJ Services s. r. o.** - jedná se o servisní společnost, která působí jako dodavatel (třetí strana) pro RSJ Investments. IT oddělení je téměř celé aktuálně pouze na RSJ Services. Pouze já mám
+2. **RSJ Services s. r. o.** - jedná se o servisní společnost, která působí jako dodavatel (třetí strana) pro RSJ Investments. IT oddělení je téměř celé aktuálně pouze na RSJ Services. Pouze já mám úvazek i na RSJ Investments a. s. (80%)
 
 Dále v rámci skupiny spolupracujeme s další společností a to je **RSJ Custody a. s.**. Tato společnost je také regulovaná a pod tuto společnost spadá vývojové oddělení informačních systémů. Programují pro nás různé aplikace (BOSS, WF založení fondu aj.). Vedoucím tohoto oddělení je **Tomáš Málek** a má pod sebou několik programátorů. Zároveň pod něj organizačně spatá i **Dušan Marko**, ale zároveň 100% jeho FTE je alokováno právě pro nás jako pro RSJ Investments, jelikož pro nás dělá činnosti viz. [Dušan Marko](#dusan-marko).
 
@@ -149,6 +149,7 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 | [Auditní workflow](#auditní-workflow) | Development | PoC | RSJ Custody (IS útvar) | 11/2026 | ... |
 | [Projects](#projects) | Development | Analýza | SharePoint Solutions s. r. o. | 09/2026 | 04/2027 |
 | [Invoices](#invoices) | Development | Nápad | SharePoint Solutions s. r. o. | 2027 | 2027 |
+| [Migrace DWH do Fabricu](#migrace-dwh-do-fabricu) | Reporting | Analýza | výběrové řízení | ... | ... |
 
 ### Core IT
 
@@ -390,6 +391,24 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 ### Reporting
 
+#### Migrace DWH do Fabricu
+
+- **Cíl:** převést stávající datový sklad a reporting na platformu Microsoft Fabric.
+- **Partner:** probíhá výběrové řízení
+- **Zahájení:** ...
+- **Fáze:** Analýza
+- **Očekávaný přínos:** moderní a škálovatelná datová platforma propojená s Power BI a M365, jednodušší správa dat a menší závislost na jednotlivcích. Konkrétní přínosy a náklady jsou předmětem výběrového řízení.
+
+**Průběh:**
+
+- [x] Oslovení partnerů
+- [ ] Výběrové řízení: porovnání nabídek, nákladů a přínosů – *probíhá*
+- [ ] Rozhodnutí o realizaci a výběr partnera
+- [ ] Migrace DWH
+- [ ] Převedení reportingu v Power BI
+
+**Návaznost:** projekt navazuje na [DWH](#aplikace) a [Power BI](#aplikace). Zároveň je součástí cílového modelu týmu Data a reporting, včetně otázky přístupu partnera k datům a míry závislosti na něm (viz [Strategie](#strategie)).
+
 ## Budget
 
 <!-- Bude doplněno následně, slide by měl sloužit pro přehled jaký byl plánovaný budget a jaký je aktuální stav k Q2, jelikož více dat nemám od účetních -->
@@ -425,3 +444,34 @@ Místo náboru dalšího IT administrátora do Provozu je možné rozvinout stá
 **Přínosy:** nižší náklady, využití znalosti firmy, DMS a uživatelů, kterou Jan už má, a motivace a růst stávajícího člověka.
 
 **Rizika:** rozvoj potřebuje čas a vyžaduje, aby Jan převzal větší odpovědnost, což je dnes jeho slabší stránka. Stážista má omezenou kapacitu i dostupnost, takže L1 bude potřebovat zástup.
+
+### Strategie projektů
+
+> Hlavním směrem je AI. Abychom ji mohli využívat naplno a bezpečně, zároveň ladíme stávající systémy, stavíme kvalitní datový základ a dokončujeme přechod do cloudu.
+
+#### 1. Ladění stávajících systémů
+
+V souladu s požadavkem nevymýšlíme zbytečně nové systémy, ale vylepšujeme a naplno využíváme to, co máme. Příkladem je [MS Sentinel](#ms-sentinel), [Alvao](#it-service-management-v-alvao) nebo napojování systémů na [MDM](#mdm). Nové projekty zakládáme jen tam, kde stávající řešení nevyhovuje (např. [DMS](#dms)).
+
+#### 2. AI jako hlavní směr rozvoje
+
+AI bude hrát v dalším období klíčovou roli. Zaměřujeme se na automatizaci opakované ruční práce v byznysu: zpracování dat pro PE/VC tým, kontrolu smluv nebo vytěžování faktur. Využíváme přitom i licence M365 E5/E7 včetně M365 Copilot, za které už platíme. Plánujeme nasazení RAG nad DMS a postupné propojování AI automatizací.
+
+AI zavádíme řízeně: postupně přes PoC a pilot, s kontrolou výstupů člověkem a s posouzením IKT rizik ve spolupráci s 2. linií.
+
+#### 3. Kvalitní data jako základ
+
+AI a reporting potřebují spolehlivá data. Proto budujeme jeden zdroj pravdy pro kmenová data ([MDM](#mdm)) i pro zaměstnance ([HR modul BOSS](#propojení-hr-modulu-boss-s-ad)), řízení oprávnění podle rolí ([RBAC](#rbac)) a moderní datovou platformu ([Fabric](#migrace-dwh-do-fabricu)), zároveň musí vzniknout pozice Datového specialisty, která zajistí správnou kvalitu dat jako vstup pro AI.
+
+#### 4. Cloud first: SaaS a PaaS
+
+Postupně rušíme on-premise SharePoint, lokální Active Directory a virtuální servery v Azure. Cílem je provozovat vše jako SaaS a PaaS s identitami pouze v Entra ID. Méně vlastní infrastruktury znamená menší provozní zátěž týmu, vyšší bezpečnost a nižší riziko výpadků.
+
+#### Výhled
+
+| Období | Hlavní kroky |
+|---|---|
+| Do konce 2026 | dokončení Sentinelu a migrace DMS, ostrý provoz Založení fondu, vyhodnocení pilotů a PoC v AI, výběr partnera pro Fabric |
+| 2027 | migrace Projects, migrace a nasazení Invoices, rozšíření AI automatizací do provozu, migrace DWH do Fabricu |
+| 2028 | odstavení on-premise SharePointu a lokálního AD, rušení VM |
+| Dlouhodobě | plně cloudové prostředí (SaaS/PaaS), AI jako běžná součást klíčových procesů, RBAC napříč všemi systémy |
