@@ -136,20 +136,24 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 | Projekt | Oblast | Fáze | Partner | Zahájení | Plánované dokončení |
 |---|---|---|---|---|---|
-| [MS Sentinel](#ms-sentinel) | Core IT | Dokončení | Orbit | 5/2026 | 11/2026 |
+| [MS Sentinel](#ms-sentinel) | Core IT | Dokončení | Orbit | 05/2026 | 11/2026 |
 | [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) | Core IT | Provoz | RSJ Custody (IS útvar) | 03/2026 | 09/2026 |
 | [RBAC](#rbac) | Core IT | Realizace | interně | 04/2026 | dlouhodobý |
-| [IT service management v Alvao](#it-service-management-v-alvao) | Core IT | Provoz | interně | 9/2025 | 02/2026 |
+| [SharePoint governance](#sharepoint-governance) | Core IT | Realizace | interně | 06/2026 | 12/2027 |
+| [IT service management v Alvao](#it-service-management-v-alvao) | Core IT | Provoz | interně | 09/2025 | 02/2026 |
 | [AI reporting pro PE/VC tým](#ai-reporting-pro-pevc-tým) | AI automatizace | Pilot | interně | 06/2026 | ... |
 | [AI posouzení LPA](#ai-posouzení-lpa) | AI automatizace | PoC | Jakub Filip | 09/2026 | ... |
 | [AI vytěžování faktur](#ai-vytěžování-faktur) | AI automatizace | Analýza | Jakub Filip | 10/2026 | ... |
-| [MDM](#mdm) | Development | Provoz, další rozvoj | D. Marko (RSJ Custody) | před 9/2025 | Průběžně |
+| [MDM](#mdm) | Development | Provoz, další rozvoj | D. Marko (RSJ Custody) | před 09/2025 | Průběžně |
 | [Založení fondu](#založení-fondu) | Development | Pilot | RSJ Custody (IS útvar) | 03/2026 | 12/2026 |
 | [DMS](#dms) | Development | Dokončení | SharePoint Solutions s. r. o. | 04/2026 | ... |
+| [BOSS HR](#boss-hr) | Development | ... | RSJ Custody (IS útvar) | ... | ... |
 | [Auditní workflow](#auditní-workflow) | Development | PoC | RSJ Custody (IS útvar) | 11/2026 | ... |
 | [Projects](#projects) | Development | Analýza | SharePoint Solutions s. r. o. | 09/2026 | 04/2027 |
 | [Invoices](#invoices) | Development | Nápad | SharePoint Solutions s. r. o. | 2027 | 2027 |
+| [Řízení úkolů a projektů](#řízení-úkolů-a-projektů) | Development | Analýza | interně  | 08/2026 | ... |
 | [Migrace DWH do Fabricu](#migrace-dwh-do-fabricu) | Reporting | Analýza | výběrové řízení | ... | ... |
+| [Databáze KPI](#databáze-kpi) | Reporting | Analýza | interně | 10/2026 | ... |
 
 ### Core IT
 
@@ -223,6 +227,25 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 - [ ] Pravidelná revize rolí a oprávnění
 
 **Návaznost:** zdrojem informací o zaměstnancích, jejich pozicích a úvazcích je [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad).
+
+#### SharePoint governance
+
+<!-- K doplnění: co projekt pokrývá a co je hotové -->
+
+- **Cíl:** ...
+  <!-- Pravidla pro weby a týmy? Oprávnění a sdílení? Úklid stávajícího obsahu? -->
+- **Partner:** interně
+- **Zahájení:** 06/2026
+- **Fáze:** Realizace
+- **Přínos:** ...
+  <!-- Přehled o obsahu a přístupech? Bezpečnost sdílení? Soulad s DORA? -->
+
+**Průběh:**
+
+- [ ] ...
+- [ ] ...
+
+**Návaznost:** projekt navazuje na [RBAC](#rbac) v oblasti řízení oprávnění. <!-- Případně napojení na odstavení on-premise SharePointu, Purview? -->
 
 ### AI automatizace
 
@@ -340,6 +363,24 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 **Návaznost:** číselníky společností a subjektů se v DMS načítají z [MDM](#mdm). Subjekty tak vznikají na jednom místě a v MDM je může zakládat více uživatelů, čímž se snižuje závislost na IT týmu a rozkládá zátěž. Jan Kridlo tak získá prostor na jiné iniciativy.
 
+#### BOSS HR
+
+<!-- K doplnění s Tomášem Málkem -->
+
+- **Cíl:** ...
+  <!-- Jaké další části HR modulu se rozvíjejí? -->
+- **Partner:** RSJ Custody (IS útvar, T. Málek)
+- **Zahájení:** ...
+- **Fáze:** ...
+- **Přínos:** ...
+
+**Průběh:**
+
+- [ ] ...
+- [ ] ...
+
+**Návaznost:** HR modul BOSS je zdrojem dat o zaměstnancích pro [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) a tím i pro [RBAC](#rbac).
+
 #### Auditní workflow
 
 <!-- K doplnění s Tomášem Málkem -->
@@ -389,6 +430,24 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 **Návaznost:** navazuje na [DMS](#dms) a [Projects](#projects). Nové řešení bude rovnou připravené pro napojení [AI vytěžování faktur](#ai-vytěžování-faktur).
 
+#### Řízení úkolů a projektů
+
+- **Cíl:** najít řešení pro evidenci a řízení opakovaných úkolů, projektů a osobních úkolů zaměstnanců. Projekt vznikl z poptávky finančního řízení, které potřebuje generovat opakované úkoly (checklisty) na jednotlivé fondy. Podobnou potřebu mají i další oddělení, proto řešení hledáme tak, aby šlo rozšířit napříč společností.
+- **Partner:** interně
+- **Zahájení:** 08/2026
+- **Fáze:** Analýza
+- **Přínos:** opakované úkoly vznikají automaticky a nic se neopomene, stav úkolů a projektů je přehledný a dohledatelný. Řešení nemusí znamenat nový vývoj ani nový nástroj. Přednostně posuzujeme využití stávajících nástrojů, které už máme v rámci M365 a Alvao.
+
+**Průběh:**
+
+- [ ] Sběr požadavků od finančního řízení a dalších oddělení – *probíhá*
+- [ ] Sepsání zadání – *probíhá*
+- [ ] Posouzení stávajících nástrojů a výběr řešení
+- [ ] Pilot ve finančním řízení (checklisty pro fondy)
+- [ ] Rozšíření na další oddělení
+
+**Návaznost:** seznam společností pro generování checklistů musí přebírat z [MDM](#mdm), stejně tak přiřazení jednotlivých zaměstnanců ke společnostem a jejich roli. Nový fond založený přes workflow [Založení fondu](#založení-fondu) by tak mohl rovnou dostat svoje opakované úkoly.
+
 ### Reporting
 
 #### Migrace DWH do Fabricu
@@ -407,7 +466,24 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 - [ ] Migrace DWH
 - [ ] Převedení reportingu v Power BI
 
-**Návaznost:** projekt navazuje na [DWH](#aplikace) a [Power BI](#aplikace). Zároveň je součástí cílového modelu týmu Data a reporting, včetně otázky přístupu partnera k datům a míry závislosti na něm (viz [Strategie](#strategie)).
+**Návaznost:** projekt navazuje na [DWH](#aplikace) a [Power BI](#aplikace). Zároveň je součástí cílového modelu týmu Data a reporting, včetně otázky přístupu partnera k datům a míry závislosti na něm (viz [Strategie](#strategie)). Jako možnou platformu zvažujeme Fabric i pro novou [Databázi KPI](#databáze-kpi).
+
+#### Databáze KPI
+
+- **Cíl:** vytvořit databázi KPI projektů jako jednotný zdroj dat pro finanční manažery a risk.
+- **Partner:** interně
+- **Zahájení:** 10/2026
+- **Fáze:** Analýza
+- **Přínos:** KPI na jednom místě se strukturovanými a konzistentními daty, bez ručního dohledávání z více zdrojů. Databáze bude základem pro reporting v Power BI i pro další analýzy.
+
+**Průběh:**
+
+- [ ] Zjištění aktuálního stavu dat a jejich zdrojů – *probíhá*
+- [ ] Návrh řešení a způsobu převedení dat
+- [ ] Realizace databáze
+- [ ] Napojení na reporting v Power BI
+
+**Návaznost:** výsledky slouží jako zdroj pro reporting v [Power BI](#aplikace). Jednou z možných platforem je Microsoft Fabric (viz [Migrace DWH do Fabricu](#migrace-dwh-do-fabricu)), kde by nad daty šlo dělat další analýzy pomocí Pythonu. Konkrétní řešení vyplyne z analýzy.
 
 ## Budget
 
