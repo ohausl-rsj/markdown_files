@@ -138,20 +138,21 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 |---|---|---|---|---|---|
 | [MS Sentinel](#ms-sentinel) | Core IT | Dokončení | Orbit | 05/2026 | 11/2026 |
 | [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) | Core IT | Provoz | RSJ Custody (IS útvar) | 03/2026 | 09/2026 |
+| [IT service management v Alvao](#it-service-management-v-alvao) | Core IT | Provoz | interně | 09/2025 | 02/2026 |
 | [RBAC](#rbac) | Core IT | Realizace | interně | 04/2026 | dlouhodobý |
 | [SharePoint governance](#sharepoint-governance) | Core IT | Realizace | interně | 06/2026 | 12/2027 |
-| [IT service management v Alvao](#it-service-management-v-alvao) | Core IT | Provoz | interně | 09/2025 | 02/2026 |
 | [AI reporting pro PE/VC tým](#ai-reporting-pro-pevc-tým) | AI automatizace | Pilot | interně | 06/2026 | ... |
 | [AI posouzení LPA](#ai-posouzení-lpa) | AI automatizace | PoC | Jakub Filip | 09/2026 | ... |
 | [AI vytěžování faktur](#ai-vytěžování-faktur) | AI automatizace | Analýza | Jakub Filip | 10/2026 | ... |
-| [MDM](#mdm) | Development | Provoz, další rozvoj | D. Marko (RSJ Custody) | před 09/2025 | Průběžně |
+| [MDM](#mdm) | Development | Provoz, další rozvoj | D. Marko (RSJ Custody) | před 09/2025 | průběžně |
 | [Založení fondu](#založení-fondu) | Development | Pilot | RSJ Custody (IS útvar) | 03/2026 | 12/2026 |
 | [DMS](#dms) | Development | Dokončení | SharePoint Solutions s. r. o. | 04/2026 | ... |
-| [BOSS HR](#boss-hr) | Development | ... | RSJ Custody (IS útvar) | ... | ... |
-| [Auditní workflow](#auditní-workflow) | Development | PoC | RSJ Custody (IS útvar) | 11/2026 | ... |
+| [BOSS HR](#boss-hr) | Development | Provoz, další rozvoj | RSJ Custody (IS útvar) | 01/2026 | průběžně |
+| [Auditní workflow](#auditní-workflow) | Development | Realizace | RSJ Custody (IS útvar), SharePoint Solutions s. r. o. | 11/2026 | ... |
+| [Nový BOSS](#nový-boss) | Development | Realizace | RSJ Custody (IS útvar) | 11/2025 | průběžně, bez harmonogramu |
 | [Projects](#projects) | Development | Analýza | SharePoint Solutions s. r. o. | 09/2026 | 04/2027 |
 | [Invoices](#invoices) | Development | Nápad | SharePoint Solutions s. r. o. | 2027 | 2027 |
-| [Řízení úkolů a projektů](#řízení-úkolů-a-projektů) | Development | Analýza | interně  | 08/2026 | ... |
+| [Řízení úkolů a projektů](#řízení-úkolů-a-projektů) | Development | Analýza | interně | 08/2026 | ... |
 | [Migrace DWH do Fabricu](#migrace-dwh-do-fabricu) | Reporting | Analýza | výběrové řízení | ... | ... |
 | [Databáze KPI](#databáze-kpi) | Reporting | Analýza | interně | 10/2026 | ... |
 
@@ -230,22 +231,21 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 #### SharePoint governance
 
-<!-- K doplnění: co projekt pokrývá a co je hotové -->
-
-- **Cíl:** ...
-  <!-- Pravidla pro weby a týmy? Oprávnění a sdílení? Úklid stávajícího obsahu? -->
+- **Cíl:** udělat pořádek v SharePoint Online a nastavit jasná pravidla pro jeho správu. U každé site je známý vlastník, účel a struktura a přístupy jsou nastavené podle rolí, ne jednotlivě.
 - **Partner:** interně
 - **Zahájení:** 06/2026
 - **Fáze:** Realizace
-- **Přínos:** ...
-  <!-- Přehled o obsahu a přístupech? Bezpečnost sdílení? Soulad s DORA? -->
+- **Přínos:** přehled o tom, jaké sites existují, kdo za ně odpovídá a k čemu slouží. Jednotná pravidla pro zakládání nových sites a týmů brání vzniku neřízeného obsahu. Oprávnění jsou přehledná a auditovatelná, což podporuje požadavky DORA na řízení přístupů. Nově nastoupený zaměstnanec automaticky dostane podle své role přístup k základním sites a týmům.
 
 **Průběh:**
 
-- [ ] ...
-- [ ] ...
+- [ ] Revize stávajících sites – *probíhá*
+- [ ] Globální dokumentace: pravidla pro zakládání sites a týmů, základní struktura – *probíhá*
+- [ ] Dokumentace jednotlivých sites: vlastník, odpovědnosti, účel a struktura – *probíhá*
+- [ ] Srovnání oprávnění na skupiny podle rolí
+- [ ] Automatické přiřazení sites a týmů novým zaměstnancům podle role
 
-**Návaznost:** projekt navazuje na [RBAC](#rbac) v oblasti řízení oprávnění. <!-- Případně napojení na odstavení on-premise SharePointu, Purview? -->
+**Návaznost:** srovnání oprávnění na skupiny navazuje na [RBAC](#rbac), zdrojem rolí a pozic zaměstnanců je [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad). Projekt je zároveň předpokladem pro nasazení Microsoft Purview (klasifikace a ochrana dat), které plánujeme podle dostupných kapacit.
 
 ### AI automatizace
 
@@ -365,43 +365,62 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 #### BOSS HR
 
-<!-- K doplnění s Tomášem Málkem -->
+HR modul interního systému BOSS slouží jako centrální evidence lidí, kteří pro RSJ Custody pracují (zaměstnanci i externisté), a jako podklad pro řízení jejich přístupů. Základní agenda je v provozu, modul se dále rozvíjí o nábor a správu rolí a oprávnění.
 
-- **Cíl:** ...
-  <!-- Jaké další části HR modulu se rozvíjejí? -->
+- **Cíl:** vytvořit jeden spolehlivý zdroj pravdy o zaměstnancích a externistech, který pokryje celý životní cyklus člověka ve firmě, od náboru přes nástup a změny pozice až po odchod, a automaticky z něj odvozovat přístupy do systémů.
 - **Partner:** RSJ Custody (IS útvar, T. Málek)
-- **Zahájení:** ...
-- **Fáze:** ...
-- **Přínos:** ...
+- **Zahájení:** 01/2026
+- **Fáze:** Provoz, další rozvoj
+- **Přínos:** modul nahrazuje roztroušené tabulky jednotnou a aktuální evidencí všech osob na jednom místě a zajišťuje řízený onboarding a offboarding, včetně včasného odebrání přístupů při odchodu. Díky tomu je doložitelné, kdo měl jaký přístup a kdo ho schválil, což je důležité pro audit i regulátora. Automatické napojení na AD zároveň snižuje ruční práci HR i IT. Po dokončení náborové části přibude také ucelený přehled o kandidátech a průběhu výběrových řízení.
 
 **Průběh:**
 
-- [ ] ...
-- [ ] ...
+- [x] Evidence zaměstnanců
+- [x] Evidence externistů
+- [x] Onboarding/offboarding
+- [ ] Náborová databáze a proces hiringu (evidence kandidátů, stavy výběrového řízení, předání úspěšného kandidáta do onboardingu)
+- [ ] Matice rolí a oprávnění (vazba pozice → role → přístupy)
+- [ ] Workflow na řízení změn oprávnění (žádost, schválení, provedení, auditní stopa)
 
 **Návaznost:** HR modul BOSS je zdrojem dat o zaměstnancích pro [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) a tím i pro [RBAC](#rbac).
 
 #### Auditní workflow
 
-<!-- K doplnění s Tomášem Málkem -->
+Elektronické řízení a evidence kontrolních a schvalovacích úkonů souvisejících se správou fondů: vnitřní audit fondů, kontrola ocenění majetku dodaného účetními, evidence a schvalování právních úkonů apod. Dnes probíhá převážně ručně (e-mail, sdílené tabulky), což ztěžuje dohledání, kdo, kdy a co schválil.
 
-- **Cíl:** ...
-  <!-- Jaký proces workflow pokrývá? Co dnes backoffice dělá ručně? -->
-- **Partner:** RSJ Custody (IS útvar, T. Málek)
+- **Cíl:** zajistit, aby všechny požadované úkony byly provedeny včas, ve správném pořadí a odpovědnými osobami, a aby ke každému z nich existovala úplná a dohledatelná auditní stopa (kdo, kdy, s jakým výsledkem, s jakými podklady).
+- **Partner:** RSJ Custody (IS útvar, T. Málek), SharePoint Solutions s. r. o. (úprava WF engine)
 - **Zahájení:** 11/2026
-- **Fáze:** PoC
-  <!-- Nápad / Analýza / PoC / Realizace / Pilot / Dokončení / Provoz -->
-- **Přínos:** ...
-  <!-- Úspora času? Dohledatelnost pro audit? Soulad s regulací? -->
+- **Fáze:** Realizace
+- **Přínos:** provedené kontroly jsou doložitelné vůči regulátorovi (ČNB), auditorům i klientům fondů. Termíny, upozornění a eskalace snižují riziko, že se na některý úkon zapomene. Podklady a rozhodnutí jsou na jednom místě místo v e-mailech a tabulkách a vedení má přehled o stavu rozpracovaných úkonů. Workflow engine bude možné znovu použít i pro další procesy Custody.
 
 **Průběh:**
 
-- [ ] ...
-- [ ] ...
-  <!-- Jaké jsou hlavní kroky a co je už hotové? -->
+- [x] Analýza současného stavu a sběr požadavků (typy úkonů, role, schvalovací kroky, lhůty)
+- [x] Návrh workflow: stavy, role a oprávnění, notifikace a eskalace, povinné přílohy
+- [ ] Úprava WF engine od dodavatele (SharePoint Solutions s. r. o.) – *probíhá*
+- [ ] Sestavení samotného workflow nad upraveným engine
+- [ ] Nastavení auditní stopy a reportů (historie změn, export pro audit)
+- [ ] Testování a pilotní provoz na vybraném typu úkonu (např. ocenění majetku)
+- [ ] Zaškolení uživatelů a ostrý provoz
 
-**Návaznost:** ...
-<!-- Napojení na MDM, DMS, Invoices, BOSS? Kdo jsou uživatelé? -->
+**Návaznost:** aktuálně není plánovaná žádná návaznost na další projekty v rámci tohoto reportingu.
+
+#### Nový BOSS
+
+Dlouhodobý projekt kompletního přepracování interního systému BOSS na novou, bezpečnější technologickou platformu. Nejde o pouhou migraci: aplikační logika se přepisuje od základu a zároveň se přepracovává uživatelské rozhraní tak, aby práce v systému byla rychlejší a pohodlnější. Projekt běží průběžně vedle běžného provozu a rozvoje stávajícího BOSS.
+
+- **Cíl:** nahradit stávající aplikaci moderním řešením, které bude bezpečnější, snáze udržovatelné a rozšiřitelné a nabídne uživatelům výrazně lepší komfort. Nová platforma má zároveň vytvořit pevný základ pro další rozvoj modulů, jako je HR nebo řízení oprávnění.
+- **Partner:** RSJ Custody (IS útvar, T. Málek)
+- **Zahájení:** 11/2025
+- **Fáze:** Realizace (průběžně, vedle běžného provozu a rozvoje BOSS)
+- **Přínos:** přechod na novější technologii snižuje bezpečnostní rizika spojená se zastaralou platformou a usnadňuje plnění požadavků na bezpečnost a audit. Přepsaná aplikační logika odstraní historické nánosy, zjednoduší údržbu a zrychlí vývoj nových funkcí. Uživatelé získají přehlednější a pohodlnější rozhraní, což zkrátí běžnou práci v systému a sníží chybovost. Nový BOSS se tak stane stabilním základem pro navazující projekty místo toho, aby je brzdil.
+
+**Průběh:**
+
+Projekt nemá pevný harmonogram, postupuje se průběžně podle kapacit.
+
+**Návaznost:** Nový BOSS nahradí stávající aplikaci včetně [BOSS HR](#boss-hr), takže se jej týká i [Propojení HR modulu BOSS s AD](#propojení-hr-modulu-boss-s-ad) a [RBAC](#rbac).
 
 #### Projects
 
@@ -487,7 +506,38 @@ Projekty jsou rozdělené do čtyř oblastí: Core IT, AI automatizace, developm
 
 ## Budget
 
-<!-- Bude doplněno následně, slide by měl sloužit pro přehled jaký byl plánovaný budget a jaký je aktuální stav k Q2, jelikož více dat nemám od účetních -->
+<!-- Slide: KPI dlaždice nahoře, graf uprostřed, komentář dole. Data k 30. 6. 2026 (Q2), H2 je výhled. -->
+
+> Provozní náklady IT jsou v budgetu. Za H1 jsme vyčerpali 83 % plánu a výhled na celý rok je 96 % budgetu.
+
+### Klíčová čísla
+
+| Ukazatel | Hodnota |
+|---|---|
+| Budget FY 2026 | 12,62 mil. Kč |
+| Výhled FY 2026 | 12,12 mil. Kč |
+| Čerpání FY (výhled) | **96,1 %** |
+| Rozdíl FY | −0,50 mil. Kč (úspora) |
+| Čerpání H1 | 83,1 % (4,42 z 5,32 mil. Kč) |
+
+### Budget vs. výhled FY 2026 podle oblastí
+
+<!-- Graf: horizontální sloupce, pro každou oblast dvojice Budget FY (šedá) a Výhled FY (tmavě modrá). Čerpání FY jako popisek u sloupce, nad 100 % červeně. -->
+
+| Oblast | Budget FY (mil. Kč) | Výhled FY (mil. Kč) | Čerpání FY |
+|---|---|---|---|
+| Mzdy a režie | 5,65 | 5,56 | 98,3 % |
+| Licence | 3,43 | 3,16 | 92,2 % |
+| Služby mimo skupinu | 1,91 | 2,14 | **112,0 %** |
+| Azure | 1,61 | 1,24 | 77,3 % |
+| Ostatní náklady | 0,02 | 0,02 | 98,8 % |
+| **Celkem** | **12,62** | **12,12** | **96,1 %** |
+
+### Komentář
+
+- **Celkově v plánu:** výhled na rok je o 0,5 mil. Kč pod budgetem.
+
+*Zdroj: účetnictví k 30. 6. 2026. Data za Q3 zatím nejsou k dispozici, výhled H2 je odhad.*
 
 ## Strategie
 
