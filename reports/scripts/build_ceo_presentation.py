@@ -38,6 +38,7 @@ GREY_BG = "F3F5F8"
 WHITE = "FFFFFF"
 ACCENT = "E3A008"      # jediná akcentní barva (zvýraznění, rizika, RSJ Custody)
 ACCENT_BG = "FDF4DC"
+RED = "C53030"         # jen pro překročení budgetu (čerpání nad 100 %)
 
 AREA = {               # barvy oblastí projektů – konzistentní na všech slidech
     "Core IT": "2B6CB0",
@@ -243,7 +244,7 @@ def s02_summary(prs):
         "doplněný a pracuje řízeně. V souladu s vaším požadavkem se soustředíme na ladění a plné využití systémů, "
         "které už máme, nové projekty otevíráme jen tam, kde stávající řešení nevyhovuje. Hlavním směrem je AI, "
         "kterou zavádíme řízeně a stavíme pro ni datový základ a cloudové prostředí. "
-        "V přehledu máme 18 projektů, z toho 3 v provozu, 3 v oblasti AI a 5 realizujeme společně s IS útvarem RSJ Custody."
+        "V přehledu máme 19 projektů, z toho 4 v provozu, 3 v oblasti AI a 6 realizujeme společně s IS útvarem RSJ Custody."
     ))
     msgs = [
         ("Stabilizace", "Po odchodu 2 ze 3 techniků je tým rychle doplněný a pracuje řízeně."),
@@ -260,8 +261,8 @@ def s02_summary(prs):
             {"text": m, "size": 15, "color": INK},
         ], anchor="m")
         y += 1.25
-    kpis = [("18", "projektů v přehledu", NAVY), ("3", "projekty v provozu", NAVY),
-            ("3", "AI projekty", AREA["AI automatizace"]), ("5", "projektů s RSJ Custody", ACCENT)]
+    kpis = [("19", "projektů v přehledu", NAVY), ("4", "projekty v provozu", NAVY),
+            ("3", "AI projekty", AREA["AI automatizace"]), ("6", "projektů s RSJ Custody", ACCENT)]
     x0, y0, kw, kh = 8.3, 1.6, 2.1, 2.35
     for i, (n, t, c) in enumerate(kpis):
         x = x0 + (i % 2) * (kw + 0.23)
@@ -448,17 +449,18 @@ def s05_team(prs):
 PROJECTS = [  # (název, oblast, fáze, custody) – dle tabulky Přehled projektů
     ("MS Sentinel", "Core IT", "Dokončení", False),
     ("Propojení HR modulu BOSS s AD", "Core IT", "Provoz", True),
+    ("IT service management v Alvao", "Core IT", "Provoz", False),
     ("RBAC", "Core IT", "Realizace", False),
     ("SharePoint governance", "Core IT", "Realizace", False),
-    ("IT service management v Alvao", "Core IT", "Provoz", False),
     ("AI reporting pro PE/VC tým", "AI automatizace", "Pilot", False),
     ("AI posouzení LPA", "AI automatizace", "PoC", False),
     ("AI vytěžování faktur", "AI automatizace", "Analýza", False),
     ("MDM", "Development", "Provoz", True),
     ("Založení fondu", "Development", "Pilot", True),
     ("DMS", "Development", "Dokončení", False),
-    ("BOSS HR", "Development", None, True),  # fáze v podkladu zatím neuvedena
-    ("Auditní workflow", "Development", "PoC", True),
+    ("BOSS HR", "Development", "Provoz", True),
+    ("Auditní workflow", "Development", "Realizace", True),
+    ("Nový BOSS", "Development", "Realizace", True),
     ("Projects", "Development", "Analýza", False),
     ("Invoices", "Development", "Nápad", False),
     ("Řízení úkolů a projektů", "Development", "Analýza", False),
@@ -481,13 +483,13 @@ def legend(s, x, y, areas=("Core IT", "AI automatizace", "Development", "Reporti
 
 
 def s06_overview(prs):
-    s = new_slide(prs, "18 projektů v pohybu: 3 v provozu, 5 společně s RSJ Custody", (
+    s = new_slide(prs, "19 projektů v pohybu: 4 v provozu, 6 společně s RSJ Custody", (
         "Tohle je mapa všech projektů podle fáze, od nápadu po provoz, barevně podle oblasti. V provozu jsou propojení "
-        "HR modulu BOSS s AD, IT service management v Alvao a MDM, které dál rozvíjíme. Ve fázi dokončení jsou MS Sentinel "
-        "s plánem na 11/2026 a nový DMS. Nejvíc projektů je v analýze, mimo jiné řízení úkolů a projektů, migrace DWH "
-        "do Fabricu a databáze KPI, které jsme zahájili v druhé polovině roku. Tři AI projekty jsou v různých fázích "
-        "od analýzy po pilot, což odpovídá řízenému zavádění. Pět projektů, označených štítkem, realizujeme společně "
-        "s RSJ Custody; u BOSS HR fázi teprve upřesňujeme s Tomášem Málkem, proto v mapě zatím není."
+        "HR modulu BOSS s AD, IT service management v Alvao, MDM a HR modul BOSS; MDM i BOSS HR dál rozvíjíme. Ve fázi "
+        "dokončení jsou MS Sentinel s plánem na 11/2026 a nový DMS. V realizaci jsou vedle RBAC a SharePoint governance "
+        "také auditní workflow a nový BOSS s RSJ Custody. Nejvíc projektů je v analýze, mimo jiné řízení úkolů "
+        "a projektů, migrace DWH do Fabricu a databáze KPI. Tři AI projekty jsou v různých fázích od analýzy po pilot, "
+        "což odpovídá řízenému zavádění. Šest projektů, označených štítkem, realizujeme společně s RSJ Custody."
     ))
     n = len(PHASES)
     gap = 0.07
@@ -532,8 +534,10 @@ def s07_core(prs):
         "podle rolí: aktuálně mapujeme systémy a definujeme role, je to dlouhodobý projekt. MS Sentinel s partnerem Orbit "
         "je ve fázi dokončení: všechny systémy jsou napojené, detekční pravidla vyladěná a playbooky hotové, teď dokončujeme "
         "přehledy a dokumentaci. Po předání ho převezme nová role security & cloud administrátora. Od června 2026 interně "
-        "realizujeme SharePoint governance s plánem dokončení do 12/2027, který navazuje na RBAC v oblasti řízení "
-        "oprávnění. Alvao jsme rozšířili na plnohodnotný IT service management včetně evidence IT aktiv podle požadavků DORA."
+        "realizujeme SharePoint governance s plánem do 12/2027: děláme revizi sites, pravidla pro zakládání sites a týmů "
+        "a dokumentaci vlastníků a účelu, následně srovnáme oprávnění na skupiny podle rolí v návaznosti na RBAC. "
+        "Projekt je zároveň předpokladem pro nasazení Microsoft Purview pro klasifikaci a ochranu dat. Alvao jsme "
+        "rozšířili na plnohodnotný IT service management včetně evidence IT aktiv podle požadavků DORA."
     ))
     # řetězec
     chain = [("HR modul BOSS", "zdroj dat o zaměstnancích"), ("AD / Entra ID", "identity uživatelů"),
@@ -565,7 +569,7 @@ def s07_core(prs):
         ("RBAC", "Realizace · dlouhodobý",
          "Nástup, změna pozice i odchod se řeší přiřazením role. Oprávnění jsou přehledná a auditovatelná.", False),
         ("SharePoint governance", "Realizace · do 12/2027",
-         "Navazuje na RBAC v oblasti řízení oprávnění.", False),
+         "Každá site má vlastníka a účel, přístupy jsou podle rolí. Přehledné a auditovatelné podle DORA.", False),
         ("IT service management v Alvao", "Provoz",
          "Požadavky, změny a incidenty procházejí jednotným dohledatelným procesem podle DORA.", False),
     ]
@@ -640,9 +644,12 @@ def s09_dev(prs):
         "a v roce 2027 Invoices. Po přesunu všech tří aplikací odstavíme on-premise SharePoint a zrušíme lokální AD. "
         "Druhým příběhem je MDM, které je od 7/2026 v produkci: subjekty vznikají jen v MDM a napojené systémy pracují se "
         "stejnými daty. Na MDM staví i nový projekt řízení úkolů a projektů, který vznikl z poptávky finančního řízení "
-        "po opakovaných checklistech pro fondy; přednostně posuzujeme stávající nástroje v M365 a Alvao. Auditní workflow "
-        "a BOSS HR s RSJ Custody jsou na začátku, podrobnosti doplníme s Tomášem Málkem. V reportingu probíhá výběrové "
-        "řízení na partnera pro migraci DWH do Fabricu a analýza databáze KPI pro finanční manažery a risk."
+        "po opakovaných checklistech pro fondy; přednostně posuzujeme stávající nástroje v M365 a Alvao. S RSJ Custody "
+        "realizujeme auditní workflow, které převádí ruční kontroly a schvalování úkonů fondů z e-mailů a tabulek do "
+        "dohledatelného procesu s auditní stopou; teď SharePoint Solutions upravuje WF engine. HR modul BOSS je v provozu "
+        "a rozvíjí se o nábor a matici rolí a oprávnění. Nový BOSS přepisuje celý systém na bezpečnější platformu, běží "
+        "průběžně bez pevného harmonogramu. V reportingu probíhá výběrové řízení na partnera pro migraci DWH do Fabricu "
+        "a analýza databáze KPI pro finanční manažery a risk."
     ))
     text(s, LM, 1.45, 8, 0.38, "Migrace z on-premise SharePointu", size=14, bold=True, color=NAVY2)
     steps = [("DMS", "Dokončení", c), ("Projects", "Analýza · plán 04/2027", c),
@@ -685,10 +692,12 @@ def s09_dev(prs):
     others = [
         ("Založení fondu", "Pilot · plán 12/2026", dev, True,
          "Jednotný řízený a dohledatelný proces."),
-        ("Auditní workflow", "PoC · od 11/2026", dev, True,
-         "Zahájeno společně s IS útvarem RSJ Custody."),
-        ("BOSS HR", "", dev, True,
-         "Zdroj dat o zaměstnancích pro AD a RBAC."),
+        ("Auditní workflow", "Realizace · od 11/2026", dev, True,
+         "Kontroly a schvalování s auditní stopou."),
+        ("BOSS HR", "Provoz, další rozvoj", dev, True,
+         "Jedna evidence lidí, řízený nástup i odchod."),
+        ("Nový BOSS", "Realizace · průběžně", dev, True,
+         "Přepis BOSS na bezpečnější platformu."),
         ("Řízení úkolů a projektů", "Analýza · od 08/2026", dev, False,
          "Opakované úkoly vznikají automaticky, nic se neopomene."),
         ("Migrace DWH do Fabricu", "Analýza · výběr partnera", rep, False,
@@ -696,29 +705,29 @@ def s09_dev(prs):
         ("Databáze KPI", "Analýza · od 10/2026", rep, False,
          "KPI projektů na jednom místě pro finanční manažery a risk."),
     ]
-    y, rh = 3.55, 0.52
+    y, rh = 3.52, 0.45   # 7 řádků musí skončit nad zápatím (6.98)
     for n, ph, col, cust, b in others:
         rrect(s, xr, y, wr, rh, fill=GREY_BG, radius=0.1)
         rect(s, xr, y, 0.08, rh, fill=col)
         runs = ([(ph + " · ", {"bold": True, "color": col})] if ph else []) + [(b, {})]
         text(s, xr + 0.18, y, wr - 0.3, rh, [
-            {"text": n, "size": 12.5, "bold": True, "color": NAVY},
-            {"runs": runs, "size": 10.5},
-        ], color=GREY_D, anchor="m", margin=(0.04, 0.02, 0.04, 0.02), spacing=0.95)
+            {"text": n, "size": 12, "bold": True, "color": NAVY},
+            {"runs": runs, "size": 10},
+        ], color=GREY_D, anchor="m", margin=(0.04, 0.01, 0.04, 0.01), spacing=0.95)
         if cust:
-            custody_tag(s, xr + wr - 1.1, y + 0.07, w=1.0, h=0.22, size=8)
-        y += rh + 0.04
+            custody_tag(s, xr + wr - 1.1, y + 0.05, w=1.0, h=0.2, size=8)
+        y += rh + 0.03
 
 
 def s10_custody(prs):
-    s = new_slide(prs, "S RSJ Custody společně posouváme pět klíčových projektů", (
+    s = new_slide(prs, "S RSJ Custody společně posouváme šest klíčových projektů", (
         "Spolupráce s IS útvarem RSJ Custody je pro nás klíčová a funguje. S Tomášem Málkem máme pravidelné schůzky "
         "a komunikace i spolupráce probíhá bez problémů. Na propojení HR modulu BOSS s AD dodal RSJ Custody export "
         "dat a my přenos do AD, Entra ID a dohled v Sentinelu; je to v provozu. MDM vyvíjí Dušan Marko, formálně z RSJ "
-        "Custody, plně alokovaný pro nás, a je od 7/2026 v produkci. Workflow pro založení fondu vyvinul RSJ Custody "
-        "a teď je v pilotu souběžně se starým procesem. Auditní workflow jsme zahájili v listopadu 2026 jako PoC. "
-        "Nově jsme do přehledu zařadili BOSS HR: HR modul BOSS je zdrojem dat o zaměstnancích pro propojení s AD "
-        "a tím i pro RBAC, rozsah a termíny upřesňujeme s Tomášem Málkem."
+        "Custody, plně alokovaný pro nás, a je od 7/2026 v produkci. Workflow pro založení fondu je v pilotu souběžně "
+        "se starým procesem. Auditní workflow je v realizaci, WF engine upravuje SharePoint Solutions. HR modul BOSS "
+        "eviduje zaměstnance i externisty a řídí onboarding a offboarding, dál se rozvíjí o nábor a matici rolí "
+        "a oprávnění. Nový BOSS je dlouhodobý přepis celého systému na bezpečnější platformu a týká se i propojení s AD a RBAC."
     ))
     items = [
         ("Propojení HR modulu BOSS s AD", "Core IT", "Provoz",
@@ -727,24 +736,26 @@ def s10_custody(prs):
          "Vývoj (D. Marko), od 7/2026 v produkci", "Správa, řízení projektu, napojování systémů"),
         ("Založení fondu", "Development", "Pilot · plán 12/2026",
          "Vývoj workflow aplikace", "Řízení projektu, pilot se starým procesem"),
-        ("Auditní workflow", "Development", "PoC · od 11/2026",
-         "Vývoj (IS útvar)", "Řízení projektu"),
-        ("BOSS HR", "Development", "fáze se upřesňuje",
-         "HR modul BOSS (IS útvar)", "Využití dat o zaměstnancích pro AD a RBAC"),
+        ("Auditní workflow", "Development", "Realizace · od 11/2026",
+         "Vývoj (IS útvar)", "Řízení projektu, WF engine od SharePoint Solutions"),
+        ("BOSS HR", "Development", "Provoz, další rozvoj",
+         "Evidence lidí, onboarding a offboarding, nábor", "Data o zaměstnancích pro AD a RBAC"),
+        ("Nový BOSS", "Development", "Realizace · průběžně",
+         "Přepis BOSS na novou, bezpečnější platformu", "Návaznost na propojení s AD a RBAC"),
     ]
-    gap = 0.18
+    gap = 0.16
     w = (CW - (len(items) - 1) * gap) / len(items)
     for i, (n, area, ph, cus, it) in enumerate(items):
         x = LM + i * (w + gap)
         col = AREA[area]
         card(s, x, 1.6, w, 4.15, col)
-        text(s, x + 0.15, 1.78, w - 0.3, 0.8, n, size=14, bold=True, color=NAVY)
-        text(s, x + 0.15, 2.55, w - 0.3, 0.35, ph, size=11, bold=True, color=col)
-        rect(s, x + 0.15, 3.0, w - 0.3, 0.012, fill=GREY_L)
-        custody_tag(s, x + 0.15, 3.15, w=1.0)
-        text(s, x + 0.15, 3.45, w - 0.3, 0.85, cus, size=12, color=INK)
-        pill(s, x + 0.15, 4.35, 1.0, 0.24, "IT útvar", NAVY2, size=8.5)
-        text(s, x + 0.15, 4.65, w - 0.3, 0.95, it, size=12, color=INK)
+        text(s, x + 0.12, 1.75, w - 0.24, 0.85, n, size=13, bold=True, color=NAVY)
+        text(s, x + 0.12, 2.62, w - 0.24, 0.36, ph, size=10, bold=True, color=col, margin=(0.04, 0.05, 0.04, 0.05))
+        rect(s, x + 0.12, 3.0, w - 0.24, 0.012, fill=GREY_L)
+        custody_tag(s, x + 0.12, 3.15, w=1.0)
+        text(s, x + 0.12, 3.45, w - 0.24, 0.85, cus, size=11.5, color=INK)
+        pill(s, x + 0.12, 4.35, 1.0, 0.24, "IT útvar", NAVY2, size=8.5)
+        text(s, x + 0.12, 4.65, w - 0.24, 1.0, it, size=11.5, color=INK)
     rrect(s, LM, 6.0, CW, 0.75, fill=NAVY, radius=0.1)
     label(s.shapes[-1], LM, 6.0, CW, 0.75, [{"runs": [
         ("Spolupráce funguje: ", {"bold": True, "color": ACCENT}),
@@ -753,45 +764,64 @@ def s10_custody(prs):
 
 
 def s11_budget(prs):
-    s = new_slide(prs, "Budget: plán vs. skutečnost k Q2", (
-        "Na tomto místě bude přehled plánovaného budgetu a skutečnosti k Q2. Data od účetních zatím nemám kompletní, "
-        "proto je slide připravený jako struktura a čísla doplním, jakmile je dostanu. Podle podkladů doplním i případný "
-        "výhled do konce roku."
+    s = new_slide(prs, "Provozní náklady IT jsou v budgetu: výhled na rok 96 % plánu", (
+        "Provozní náklady IT jsou v budgetu. Za první pololetí jsme vyčerpali 83 % plánu, tedy 4,42 z 5,32 mil. Kč. "
+        "Výhled na celý rok 2026 je 12,12 mil. Kč proti budgetu 12,62 mil. Kč, tedy 96 % a zhruba půl milionu pod "
+        "plánem. Největší položkou jsou mzdy a režie, následují licence. Nad plánem jsou jen služby mimo skupinu, "
+        "na 112 %, naopak Azure je výrazně pod plánem. Data jsou z účetnictví k 30. 6. 2026, za Q3 je zatím nemám "
+        "a výhled druhého pololetí je odhad."
     ))
-    rows = 5
-    tbl = s.shapes.add_table(rows, 4, Inches(LM), Inches(1.6), Inches(6.6), Inches(0.55 * rows)).table
-    heads = ["Položka", "Plán", "Skutečnost k Q2", "Odchylka"]
-    widths = [2.4, 1.3, 1.6, 1.3]
-    for j, wv in enumerate(widths):
-        tbl.columns[j].width = Inches(wv)
-    for i in range(rows):
-        tbl.rows[i].height = Inches(0.55)
-        for j in range(4):
-            cell = tbl.cell(i, j)
-            cell.fill.solid()
-            cell.fill.fore_color.rgb = rgb(NAVY if i == 0 else (GREY_BG if i % 2 else WHITE))
-            t = heads[j] if i == 0 else ("Celkem" if (i == rows - 1 and j == 0) else "")
-            fill_text(cell, t, size=12, bold=(i == 0 or i == rows - 1), color=WHITE if i == 0 else INK,
-                      align="l" if j == 0 else "r", anchor="m", margin=(0.12, 0.03, 0.12, 0.03))
-    # prázdný graf
-    gx, gy, gw, gh = LM + 7.1, 1.6, CW - 7.1, 4.3
-    rrect(s, gx, gy, gw, gh, fill=WHITE, line=GREY_L, radius=0.03)
-    text(s, gx + 0.2, gy + 0.1, gw - 0.4, 0.4, "Plán vs. skutečnost k Q2", size=13, bold=True, color=NAVY2)
-    base = gy + gh - 0.7
-    rect(s, gx + 0.5, base, gw - 0.9, 0.02, fill=GREY)
-    rect(s, gx + 0.5, gy + 0.7, 0.02, base - gy - 0.7, fill=GREY)
-    for k in range(1, 4):
-        rect(s, gx + 0.52, base - k * 0.8, gw - 0.92, 0.008, fill=GREY_L)
-    for k in range(4):
-        bx = gx + 0.8 + k * 0.95
-        rect(s, bx, base - 0.02, 0.35, 0.02, fill=NAVY)
-        rect(s, bx + 0.4, base - 0.02, 0.35, 0.02, fill=ACCENT)
-    legend_y = gy + gh - 0.5
-    rect(s, gx + 0.5, legend_y + 0.1, 0.22, 0.14, fill=NAVY)
-    text(s, gx + 0.75, legend_y, 1.0, 0.34, "Plán", size=11, color=GREY_D, anchor="m")
-    rect(s, gx + 1.8, legend_y + 0.1, 0.22, 0.14, fill=ACCENT)
-    text(s, gx + 2.05, legend_y, 2.0, 0.34, "Skutečnost k Q2", size=11, color=GREY_D, anchor="m")
-    text(s, LM, 6.25, CW, 0.5, "Hodnoty doplníme po dodání podkladů od účetních.", size=13, color=GREY, anchor="m")
+    # KPI dlaždice – dle Klíčová čísla v kapitole Budget
+    kpis = [("12,62", "mil. Kč", "Budget FY 2026"), ("12,12", "mil. Kč", "Výhled FY 2026"),
+            ("96,1 %", "", "Čerpání FY (výhled), úspora 0,50 mil. Kč"), ("83,1 %", "", "Čerpání H1 (4,42 z 5,32 mil. Kč)")]
+    gap = 0.2
+    kw = (CW - 3 * gap) / 4
+    for i, (v, u, t) in enumerate(kpis):
+        x = LM + i * (kw + gap)
+        hl = i == 2
+        rrect(s, x, 1.5, kw, 1.12, fill=ACCENT_BG if hl else GREY_BG, line=ACCENT if hl else None, radius=0.08)
+        text(s, x + 0.2, 1.55, kw - 0.4, 0.6, [{"runs": [(v, {"size": 28, "bold": True, "color": NAVY}),
+                                                          ("  " + u if u else "", {"size": 13, "color": GREY_D})]}],
+             anchor="m")
+        text(s, x + 0.2, 2.1, kw - 0.4, 0.5, t, size=11, color=GREY_D, anchor="t", spacing=0.95)
+    # graf Budget vs. výhled podle oblastí
+    rows = [("Mzdy a režie", 5.65, 5.56, "98,3 %"), ("Licence", 3.43, 3.16, "92,2 %"),
+            ("Služby mimo skupinu", 1.91, 2.14, "112,0 %"), ("Azure", 1.61, 1.24, "77,3 %"),
+            ("Ostatní náklady", 0.02, 0.02, "98,8 %")]
+    gy = 2.85
+    text(s, LM, gy, 7.5, 0.38, "Budget vs. výhled FY 2026 podle oblastí (mil. Kč)", size=14, bold=True, color=NAVY2)
+    lx = LM + 8.3
+    rect(s, lx, gy + 0.13, 0.22, 0.14, fill=GREY_L)
+    text(s, lx + 0.27, gy, 1.2, 0.38, "Budget FY", size=11, color=GREY_D, anchor="m")
+    rect(s, lx + 1.55, gy + 0.13, 0.22, 0.14, fill=NAVY)
+    text(s, lx + 1.82, gy, 1.5, 0.38, "Výhled FY", size=11, color=GREY_D, anchor="m")
+    lab_w, bx0, pct_w = 2.3, LM + 2.45, 1.2
+    bar_max = CW - (bx0 - LM) - pct_w - 0.75
+    vmax = max(max(r[1], r[2]) for r in rows)
+    y, rh = gy + 0.5, 0.55
+    for n, b, f, pct in rows:
+        text(s, LM, y, lab_w, rh - 0.08, n, size=12.5, bold=True, color=INK, anchor="m")
+        for k, (val, col) in enumerate(((b, GREY_L), (f, NAVY))):
+            by = y + 0.04 + k * 0.22
+            bw = max(0.03, bar_max * val / vmax)
+            rect(s, bx0, by, bw, 0.18, fill=col)
+            text(s, bx0 + bw + 0.05, by - 0.06, 0.7, 0.3, f"{val:.2f}".replace(".", ","), size=10,
+                 color=GREY_D, anchor="m", margin=(0.02, 0, 0.02, 0))
+        over = float(pct.split()[0].replace(",", ".")) > 100
+        text(s, SLIDE_W - LM - pct_w, y, pct_w, rh - 0.08, pct, size=13, bold=True,
+             color=RED if over else NAVY, align="r", anchor="m")
+        y += rh
+    text(s, SLIDE_W - LM - pct_w - 0.4, gy + 0.26, pct_w + 0.4, 0.3, "čerpání FY", size=9.5, color=GREY,
+         align="r", anchor="m")
+    # komentář
+    rrect(s, LM, 6.05, CW, 0.75, fill=GREY_BG, radius=0.1)
+    rect(s, LM, 6.05, 0.09, 0.75, fill=ACCENT)
+    text(s, LM + 0.3, 6.05, CW - 0.5, 0.75, [
+        {"runs": [("Celkově v plánu: ", {"bold": True, "color": NAVY}),
+                  ("výhled na rok je o 0,5 mil. Kč pod budgetem.", {})]},
+        {"text": "Zdroj: účetnictví k 30. 6. 2026. Data za Q3 zatím nejsou k dispozici, výhled H2 je odhad.",
+         "size": 10.5, "color": GREY},
+    ], size=14, color=INK, anchor="m")
 
 
 def s12_target(prs):
@@ -935,23 +965,25 @@ def s15_projects(prs):
     s = new_slide(prs, "Příloha: detailní přehled projektů", (
         "Detailní tabulka projektů z přehledu, s oblastí, fází, partnerem a termíny. U projektů bez stanoveného termínu "
         "dokončení je uvedena pomlčka. MDM jsem převzal v běhu, v produkci je od 7/2026. Invoices je naplánován na rok 2027. "
-        "U BOSS HR fázi a termíny teprve upřesňujeme s RSJ Custody, partnera pro migraci DWH do Fabricu vybíráme "
-        "ve výběrovém řízení."
+        "Nový BOSS nemá pevný harmonogram, postupuje průběžně podle kapacit RSJ Custody. Partnera pro migraci DWH "
+        "do Fabricu vybíráme ve výběrovém řízení."
     ))
     rows = [
         ("MS Sentinel", "Core IT", "Dokončení", "Orbit", "05/2026", "11/2026"),
         ("Propojení HR modulu BOSS s AD", "Core IT", "Provoz", "RSJ Custody (IS útvar)", "03/2026", "09/2026"),
+        ("IT service management v Alvao", "Core IT", "Provoz", "interně", "09/2025", "02/2026"),
         ("RBAC", "Core IT", "Realizace", "interně", "04/2026", "dlouhodobý"),
         ("SharePoint governance", "Core IT", "Realizace", "interně", "06/2026", "12/2027"),
-        ("IT service management v Alvao", "Core IT", "Provoz", "interně", "09/2025", "02/2026"),
         ("AI reporting pro PE/VC tým", "AI automatizace", "Pilot", "interně", "06/2026", "–"),
         ("AI posouzení LPA", "AI automatizace", "PoC", "Jakub Filip", "09/2026", "–"),
         ("AI vytěžování faktur", "AI automatizace", "Analýza", "Jakub Filip", "10/2026", "–"),
         ("MDM", "Development", "Provoz, další rozvoj", "D. Marko (RSJ Custody)", "před 09/2025", "průběžně"),
         ("Založení fondu", "Development", "Pilot", "RSJ Custody (IS útvar)", "03/2026", "12/2026"),
         ("DMS", "Development", "Dokončení", "SharePoint Solutions", "04/2026", "–"),
-        ("BOSS HR", "Development", "–", "RSJ Custody (IS útvar)", "–", "–"),
-        ("Auditní workflow", "Development", "PoC", "RSJ Custody (IS útvar)", "11/2026", "–"),
+        ("BOSS HR", "Development", "Provoz, další rozvoj", "RSJ Custody (IS útvar)", "01/2026", "průběžně"),
+        ("Auditní workflow", "Development", "Realizace", "RSJ Custody (IS útvar), SharePoint Solutions",
+         "11/2026", "–"),
+        ("Nový BOSS", "Development", "Realizace", "RSJ Custody (IS útvar)", "11/2025", "průběžně, bez harmonogramu"),
         ("Projects", "Development", "Analýza", "SharePoint Solutions", "09/2026", "04/2027"),
         ("Invoices", "Development", "Nápad", "SharePoint Solutions", "2027", "2027"),
         ("Řízení úkolů a projektů", "Development", "Analýza", "interně", "08/2026", "–"),
@@ -959,7 +991,7 @@ def s15_projects(prs):
         ("Databáze KPI", "Reporting", "Analýza", "interně", "10/2026", "–"),
     ]
     table(s, ["Projekt", "Oblast", "Fáze", "Partner", "Zahájení", "Dokončení"], rows,
-          [3.4, 1.9, 2.0, 2.6, 1.1, 1.13], row_h=0.285, size=10, area_col=1)
+          [2.75, 1.4, 1.62, 3.3, 1.0, 2.06], row_h=0.27, size=10, area_col=1)
 
 
 def table(s, heads, rows, widths, row_h=0.38, size=11.5, area_col=None):
