@@ -1,7 +1,15 @@
-Přikládám dva soubory:
+---
+name: pdf-to-word
+description: Převede obsah PDF dokumentu do Wordu (DOCX) ve firemní grafické šabloně RSJ (template.docx). Použij, když uživatel chce převést PDF do Wordu, do firemní šablony nebo do firemního formátu.
+argument-hint: <cesta ke zdrojovému PDF>
+---
 
-1. Zdrojový dokument ve formátu PDF, jehož obsah je potřeba převést do Wordu.
-2. Soubor `template.docx`, který je závaznou grafickou a formátovací šablonou výsledného dokumentu.
+# Převod PDF do Wordu podle firemní šablony
+
+## Vstupy
+
+1. **Zdrojové PDF**: cesta je v argumentu `$ARGUMENTS`. Pokud argument chybí, zeptej se uživatele, které PDF má převést.
+2. **Šablona**: soubor `template.docx` ve složce tohoto skillu. Je závaznou grafickou a formátovací šablonou výsledného dokumentu. Uživatel ji nepřikládá.
 
 Vytvoř nový dokument DOCX s obsahem převzatým ze zdrojového PDF.
 
@@ -10,6 +18,18 @@ Vytvoř nový dokument DOCX s obsahem převzatým ze zdrojového PDF.
 Výsledný dokument nevytvářej jako nový dokument pouze vizuálně podobný šabloně. Jako technický základ použij přímo kopii souboru `template.docx`, v ní nahraď původní obsah obsahem ze zdrojového PDF a zachovej její existující styly, motiv, nastavení dokumentu, záhlaví, zápatí, číslování, oddíly a formátování.
 
 `template.docx` je jediným zdrojem pravdy pro vzhled dokumentu. Zdrojové PDF je jediným zdrojem pravdy pro textový obsah a strukturu informací.
+
+Původní `template.docx` ve složce skillu nikdy neupravuj, pracuj vždy jen s jeho kopií.
+
+## Technický postup
+
+1. Přečti zdrojové PDF (nástrojem Read, u delších dokumentů po částech přes parametr `pages`) a zmapuj jeho strukturu: kapitoly a úrovně nadpisů, seznamy, tabulky.
+2. Zkopíruj `template.docx` na cílové místo (viz Výstup) pod výsledným názvem.
+3. Zjisti, jaké styly šablona obsahuje (nadpisy, běžný text, seznamy, tabulky, obsah) a jak vypadá její titulní strana, záhlaví a zápatí.
+4. Uprav kopii šablony:
+   - Pokud je k dispozici Python s knihovnou pro práci s DOCX, postupuj podle skillu `docx`.
+   - Jinak použij Microsoft Word přes COM automatizaci v PowerShellu (`New-Object -ComObject Word.Application`): otevři kopii, nahraď ukázkový obsah těla dokumentu obsahem z PDF, každému odstavci přiřaď existující styl šablony (`Range.Style`), aktualizuj obsah (`TablesOfContents(1).Update()`), dokument ulož a Word ukonči (`Quit()`), i když skript skončí chybou.
+5. Pro vizuální kontrolu výsledek exportuj do PDF (ve Wordu `SaveAs2` s formátem PDF, tj. 17) do dočasné složky (scratchpad), projdi ho po stránkách a porovnej se šablonou. Pomocné PDF po kontrole smaž.
 
 ## Požadavky na formátování
 
@@ -122,10 +142,12 @@ Před odevzdáním ověř také, že:
 
 ## Výstup
 
-Odevzdej pouze finální soubor DOCX. Nepřikládej pracovní PDF, náhledové obrázky ani pomocné soubory.
+Výsledný soubor DOCX ulož do stejné složky jako zdrojové PDF. Název výsledného souboru odvoď z názvu zdrojového PDF (stejný název, přípona `.docx`). Pokud soubor s tímto názvem už existuje, nepřepisuj ho a zeptej se uživatele.
+
+Ve složce nenechávej pracovní PDF, náhledové obrázky ani pomocné soubory.
+
+Na závěr uživateli stručně napiš, kam byl soubor uložen, a uveď případné nejasnosti ve zdrojovém textu (překlepy, nedokončené věty) nebo místa, kde se formátování nepodařilo plně sladit se šablonou.
 
 ## DŮLEŽITÉ TECHNICKÉ OMEZENÍ
 
 Nevytvářej dokument od prázdné stránky a nesnaž se vzhled `template.docx` ručně napodobit. Otevři `template.docx`, vytvoř jeho kopii a pracuj uvnitř této kopie. Zachovej původní definice stylů a formátování v souboru. Text zdrojového PDF vlož do odpovídajících existujících prvků šablony a aplikuj na něj existující styly šablony. Ruční formátování používej pouze tam, kde v `template.docx` pro daný prvek neexistuje odpovídající styl.
-
-Název výsledného souboru odvoď z názvu zdrojového PDF.
