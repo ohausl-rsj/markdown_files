@@ -13,6 +13,23 @@ argument-hint: <cesta ke zdrojovému PDF>
 
 Vytvoř nový dokument DOCX s obsahem převzatým ze zdrojového PDF.
 
+## Předpoklady
+
+- **Python 3.13** s knihovnami `python-docx` a `pdfplumber` (hlavní způsob úpravy dokumentu),
+- **Microsoft Word** (vizuální kontrola přes export do PDF, záložní způsob úpravy, pokud Python chybí).
+
+Instalace (PowerShell):
+
+```powershell
+winget install Python.Python.3.13
+# po instalaci zavřít a znovu otevřít terminál / VS Code
+python -m pip install python-docx pdfplumber
+```
+
+Pokud příkaz `python` hlásí „Python nebyl nalezen“, vypni v Nastavení → Aplikace → Pokročilá nastavení aplikací → Aliasy spouštění aplikací položky `python.exe` a `python3.exe`.
+
+Před začátkem práce ověř, že je Python dostupný (`python -c "import docx, pdfplumber"`). Pokud není, upozorni na to uživatele a pokračuj záložním způsobem přes Word.
+
 ## ZÁSADNÍ POŽADAVEK
 
 Výsledný dokument nevytvářej jako nový dokument pouze vizuálně podobný šabloně. Jako technický základ použij přímo kopii souboru `template.docx`, v ní nahraď původní obsah obsahem ze zdrojového PDF a zachovej její existující styly, motiv, nastavení dokumentu, záhlaví, zápatí, číslování, oddíly a formátování.
